@@ -633,7 +633,7 @@ export default function Page() {
       </section>
 
       {/* ================= TOOLKIT ================= */}
-      <div className="toolkit-color-layout" data-section="toolkit">
+      <div id="toolkit" className="toolkit-color-layout" data-section="toolkit">
         {/* LEFT — COLOUR PALETTE */}
         <motion.div
           className="color-palette paper"
