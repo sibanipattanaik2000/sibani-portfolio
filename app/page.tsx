@@ -498,7 +498,7 @@ export default function Page() {
           <h2 className="section-title reveal">
             THINGS I&apos;VE
             <br />
-            <span>BUILT.</span>
+            <span>BUILT</span>
           </h2>
 
           <div className="section-side-note reveal">
@@ -633,18 +633,149 @@ export default function Page() {
       </section>
 
       {/* ================= TOOLKIT ================= */}
-      <div id="toolkit" className="toolkit-color-layout" data-section="toolkit">
-        {/* LEFT — COLOUR PALETTE */}
-        <motion.div
-          className="color-palette paper"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
-        >
-          <div className="paper-label">COLOUR SYSTEM</div>
 
-          <div className="palette-list">
+ {/* ================= TOOLKIT ================= */}
+
+<section
+  id="toolkit"
+  className="section toolkit-section"
+  data-section="toolkit"
+>
+ <div className="section-label toolkit-label reveal" data-num="04">
+  TOOLKIT
+</div>
+
+  {/* EXISTING COLOUR SYSTEM + LIVE PREVIEW */}
+  <div className="toolkit-color-layout">
+
+    {/* LEFT — COLOUR PALETTE */}
+    <motion.div
+      className="color-palette paper"
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.25 }}
+    >
+      <div className="paper-label">COLOUR SYSTEM</div>
+
+      <div className="palette-list">
+        {[
+          { name: "BONE", value: "#ECE6DC" },
+          { name: "INK", value: "#050404" },
+          { name: "BLUE", value: "#011FCD" },
+          { name: "RED", value: "#D51300" },
+          { name: "AMBER", value: "#FFAC3F" },
+          { name: "KRAFT", value: "#A89079" },
+        ].map((color) => (
+          <motion.button
+            key={color.name}
+            type="button"
+            className={`palette-item ${
+              activeColor === color.value ? "active" : ""
+            }`}
+            onClick={() => setActiveColor(color.value)}
+            whileHover={{ x: 6 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
+          >
+            <span
+              className="palette-swatch"
+              style={{ backgroundColor: color.value }}
+            />
+
+            <span className="palette-name">{color.name}</span>
+
+            <span className="palette-code">{color.value}</span>
+
+            {activeColor === color.value && (
+              <motion.span
+                className="palette-active-dot"
+                layoutId="palette-active-dot"
+                style={{ backgroundColor: color.value }}
+              />
+            )}
+          </motion.button>
+        ))}
+      </div>
+    </motion.div>
+
+    {/* RIGHT — LIVE PAPER */}
+    <motion.div
+      className="colour-preview-wrap"
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.25 }}
+    >
+      <motion.div
+        className="colour-preview-paper"
+        animate={{
+          rotate: activeColor === "#D51300" ? -2 : 1.2,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 120,
+          damping: 16,
+        }}
+      >
+        <motion.div
+          key={activeColor}
+          className="colour-ink"
+          style={{
+            backgroundColor: activeColor,
+          }}
+          initial={{
+            scale: 0,
+            opacity: 0,
+            borderRadius: "50%",
+          }}
+          animate={{
+            scale: 2.5,
+            opacity: 0.92,
+            borderRadius: "0%",
+          }}
+          transition={{
+            duration: 0.85,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        />
+
+        <div className="colour-paper-texture" />
+
+        <div className="colour-preview-content">
+          <div className="colour-preview-top">
+            <span>SELECTED / 01</span>
+            <span>PALETTE</span>
+          </div>
+
+          <motion.div
+            className="aa-mark"
+            animate={{
+              color: activeColor,
+              scale: [0.96, 1.04, 1],
+            }}
+            transition={{
+              duration: 0.65,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          >
+            AA
+          </motion.div>
+
+          <motion.div
+            className="selected-colour-name"
+            key={activeColor}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.4,
+              ease: "easeOut",
+            }}
+          >
             {[
               { name: "BONE", value: "#ECE6DC" },
               { name: "INK", value: "#050404" },
@@ -652,143 +783,23 @@ export default function Page() {
               { name: "RED", value: "#D51300" },
               { name: "AMBER", value: "#FFAC3F" },
               { name: "KRAFT", value: "#A89079" },
-            ].map((color) => (
-              <motion.button
-                key={color.name}
-                type="button"
-                className={`palette-item ${
-                  activeColor === color.value ? "active" : ""
-                }`}
-                onClick={() => setActiveColor(color.value)}
-                whileHover={{ x: 6 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 20,
-                }}
-              >
-                <span
-                  className="palette-swatch"
-                  style={{ backgroundColor: color.value }}
-                />
-
-                <span className="palette-name">{color.name}</span>
-
-                <span className="palette-code">{color.value}</span>
-
-                {activeColor === color.value && (
-                  <motion.span
-                    className="palette-active-dot"
-                    layoutId="palette-active-dot"
-                    style={{ backgroundColor: color.value }}
-                  />
-                )}
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* RIGHT — LIVE PAPER */}
-        <motion.div
-          className="colour-preview-wrap"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
-        >
-          <motion.div
-            className="colour-preview-paper"
-            animate={{
-              rotate: activeColor === "#D51300" ? -2 : 1.2,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 120,
-              damping: 16,
-            }}
-          >
-            {/* animated colour layer */}
-            <motion.div
-              key={activeColor}
-              className="colour-ink"
-              style={{
-                backgroundColor: activeColor,
-              }}
-              initial={{
-                scale: 0,
-                opacity: 0,
-                borderRadius: "50%",
-              }}
-              animate={{
-                scale: 2.5,
-                opacity: 0.92,
-                borderRadius: "0%",
-              }}
-              transition={{
-                duration: 0.85,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-            />
-
-            {/* subtle paper texture */}
-            <div className="colour-paper-texture" />
-
-            <div className="colour-preview-content">
-              <div className="colour-preview-top">
-                <span>SELECTED / 01</span>
-                <span>PALETTE</span>
-              </div>
-
-              <motion.div
-                className="aa-mark"
-                animate={{
-                  color: activeColor,
-                  scale: [0.96, 1.04, 1],
-                }}
-                transition={{
-                  duration: 0.65,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-              >
-                AA
-              </motion.div>
-
-              <motion.div
-                className="selected-colour-name"
-                key={activeColor}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.4,
-                  ease: "easeOut",
-                }}
-              >
-                {
-                  [
-                    { name: "BONE", value: "#ECE6DC" },
-                    { name: "INK", value: "#050404" },
-                    { name: "BLUE", value: "#011FCD" },
-                    { name: "RED", value: "#D51300" },
-                    { name: "AMBER", value: "#FFAC3F" },
-                    { name: "KRAFT", value: "#A89079" },
-                  ].find((c) => c.value === activeColor)?.name
-                }
-              </motion.div>
-
-              <motion.div
-                className="selected-colour-code"
-                key={`${activeColor}-code`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.75 }}
-                transition={{ delay: 0.1 }}
-              >
-                {activeColor}
-              </motion.div>
-            </div>
+            ].find((c) => c.value === activeColor)?.name}
           </motion.div>
-        </motion.div>
-      </div>
+
+          <motion.div
+            className="selected-colour-code"
+            key={`${activeColor}-code`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.75 }}
+            transition={{ delay: 0.1 }}
+          >
+            {activeColor}
+          </motion.div>
+        </div>
+      </motion.div>
+    </motion.div>
+  </div>
+</section>
 
       {/* ================= EXPERIENCE ================= */}
       <section id="experience" className="section" data-section="experience">
